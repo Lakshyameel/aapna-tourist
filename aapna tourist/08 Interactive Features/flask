@@ -1,0 +1,72 @@
+from flask import Flask, render_template, request, redirect, url_for
+from collections import defaultdict
+
+app = Flask(__name__)
+
+# Sample data for locations
+location_data = {
+    "Eiffel Tower": {
+        "description": "An iconic landmark in Paris, known for its breathtaking views.",
+        "reviews": [],
+        "average_rating": 0,
+        "bookmarked": False
+    },
+    "Louvre Museum": {
+        "description": "The world’s largest art museum and a historic monument in Paris.",
+        "reviews": [],
+        "average_rating": 0,
+        "bookmarked": False
+    },
+    "Colosseum": {
+        "description": "An ancient amphitheater in Rome, known for gladiatorial games.",
+        "reviews": [],
+        "average_rating": 0,
+        "bookmarked": False
+    },
+    "Great Wall of China": {
+        "description": "A series of fortifications made of various materials, stretching across northern China.",
+        "reviews": [],
+        "average_rating": 0,
+        "bookmarked": False
+    }
+}
+
+@app.route('/')
+def index():
+    return render_template('index.html', locations=location_data)
+
+@app.route('/location_details', methods=['POST'])
+def location_details():
+    location_name = request.form.get('location')
+    location = location_data.get(location_name)
+    
+    if location:
+        return render_template('location_details.html', location=location, location_name=location_name)
+    else:
+        return render_template('index.html', locations=location_data, error="Location not found.")
+
+@app.route('/add_review', methods=['POST'])
+def add_review():
+    location_name = request.form.get('location')
+    review = request.form.get('review')
+    rating = int(request.form.get('rating'))
+    
+    if location_name in location_data:
+        location = location_data[location_name]
+        location['reviews'].append({'review': review, 'rating': rating})
+        
+        # Recalculate average rating
+        total_rating = sum([r['rating'] for r in location['reviews']])
+        location['average_rating'] = total_rating / len(location['reviews'])
+
+    return redirect(url_for('location_details', location_name=location_name))
+
+@app.route('/bookmark', methods=['POST'])
+def bookmark():
+    location_name = request.form.get('location')
+    if location_name in location_data:
+        location_data[location_name]['bookmarked'] = not location_data[location_name]['bookmarked']
+    return redirect(url_for('location_details', location_name=location_name))
+
+if __name__ == '__main__':
+    app.run(debug=True)

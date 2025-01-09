@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ location_name }} - Pricing Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            width: 70%;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .location-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .location-card h3 {
+            color: #4CAF50;
+        }
+        .location-card p {
+            color: #555;
+            font-size: 16px;
+        }
+        .pricing {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pricing Details for {{ location_name }}</h1>
+    
+    <div class="container">
+        <div class="location-card">
+            <h3>Location Description</h3>
+            <p>{{ location['description'] }}</p>
+            <div class="pricing">
+                <h4>Pricing Breakdown</h4>
+                <p><strong>Entry Fee:</strong> ${{ location['entry_fee'] }}</p>
+                <p><strong>Transport Cost:</strong> ${{ location['transport_cost'] }}</p>
+                <p><strong>Other Expenses:</strong> ${{ location['other_expenses'] }}</p>
+            </div>
+        </div>
+        <a href="/" class="button">Go Back</a>
+    </div>
+</body>
+</html>

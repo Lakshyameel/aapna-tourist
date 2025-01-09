@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ location_name }} - Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            width: 70%;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .location-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .location-card h3 {
+            color: #4CAF50;
+        }
+        .location-card p {
+            color: #555;
+            font-size: 16px;
+        }
+        .review-section {
+            margin-top: 30px;
+        }
+        .review {
+            margin-bottom: 10px;
+        }
+        .rating {
+            color: #FFD700;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .rating-form input, .review-form input {
+            padding: 8px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Details for {{ location_name }}</h1>
+    
+    <div class="container">
+        <div class="location-card">
+            <h3>Location Description</h3>
+            <p>{{ location['description'] }}</p>
+            
+            <div>
+                <h3>Average Rating: {{ location['average_rating'] }} / 5</h3>
+            </div>
+            
+            <form action="/bookmark" method="POST">
+                <input type="hidden" name="location" value="{{ location_name }}">
+                <button type="submit" class="button">
+                    {% if location['bookmarked'] %}
+                        Unbookmark
+                    {% else %}
+                        Bookmark this Location
+                    {% endif %}
+                </button>
+            </form>
+
+            <div class="review-section">
+                <h3>Reviews</h3>
+                {% for review in location['reviews'] %}
+                    <div class="review">
+                        <p>{{ review['review'] }}</p>
+                        <p class="rating">Rating: {{ review['rating'] }} / 5</p>
+                    </div>
+                {% endfor %}
+
+                <h3>Add a Review</h3>
+                <form action="/add_review" method="POST">
+                    <input type="hidden" name="location" value="{{ location_name }}">
+                    <textarea name="review" required placeholder="Write your review here" style="width: 100%; height: 100px;"></textarea><br>
+                    <input type="number" name="rating" min="1" max="5" required placeholder="Rating (1-5)"><br>
+                    <button type="submit" class="button">Submit Review</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="/" class="button">Back to Locations</a>
+    </div>
+</body>
+</html>

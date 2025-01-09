@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggested Itinerary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .list {
+            margin-top: 20px;
+        }
+        .list h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Suggested Itinerary</h1>
+    <p>{{ preference_message }}</p>
+    
+    <div class="list">
+        <h3>Activities:</h3>
+        <ul>
+            {% for activity in activities %}
+                <li>{{ activity }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Transportation:</h3>
+        <p>{{ transportation }}</p>
+
+        <h3>Dining Options:</h3>
+        <ul>
+            {% for place in dining %}

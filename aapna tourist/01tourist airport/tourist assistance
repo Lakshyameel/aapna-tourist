@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Assistance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .location-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            margin: 10px;
+            width: 90%;
+            max-width: 600px;
+        }
+        .location-card h2 {
+            margin: 0;
+            color: #4caf50;
+        }
+        .location-card p {
+            margin: 10px 0;
+        }
+        .detect-btn {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+        .detect-btn:hover {
+            background-color: #45a049;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Tourist Assistance</h1>
+    </header>
+    <main>
+        <button class="detect-btn" onclick="detectLocation()">Detect My Location</button>
+        <div id="locations-container"></div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Tourist Assistance. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        async function detectLocation() {
+            const locationsContainer = document.getElementById('locations-container');
+            locationsContainer.innerHTML = '<p>Detecting your location...</p>';
+
+            if (!navigator.geolocation) {
+                locationsContainer.innerHTML = '<p>Your browser does not support location detection.</p>';
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const { latitude, longitude } = position.coords;
+
+                const attractions = await fetchNearbyAttractions(latitude, longitude);
+                displayAttractions(attractions);
+            }, (error) => {
+                locationsContainer.innerHTML = `<p>Unable to detect location: ${error.message}</p>`;
+            });
+        }
+
+        async function fetchNearbyAttractions(lat, lon) {
+            // Simulate fetching attractions with dummy data
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve([
+                        { name: 'Taj Mahal', description: 'A beautiful monument in Agra, Uttar Pradesh.' },
+                        { name: 'Gateway of India', description: 'A historic monument in Mumbai, Maharashtra.' },
+                        { name: 'India Gate', description: 'A war memorial in New Delhi.' }
+                    ]);
+                }, 1000);
+            });
+        }
+
+        function displayAttractions(attractions) {
+            const locationsContainer = document.getElementById('locations-container');
+            locationsContainer.innerHTML = '';
+
+            if (attractions.length === 0) {
+                locationsContainer.innerHTML = '<p>No attractions found nearby.</p>';
+                return;
+            }
+
+            attractions.forEach(attraction => {
+                const card = document.createElement('div');
+                card.className = 'location-card';
+
+                const title = document.createElement('h2');
+                title.textContent = attraction.name;
+
+                const description = document.createElement('p');
+                description.textContent = attraction.description;
+
+                card.appendChild(title);
+                card.appendChild(description);
+                locationsContainer.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

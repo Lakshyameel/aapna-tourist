@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ _('Emergency Contact Numbers') }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            width: 70%;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .country-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .country-card h3 {
+            color: #4CAF50;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ _('Emergency Contact Numbers') }}</h1>
+    
+    <div class="container">
+        {% for country, contacts in contacts.items() %}
+            <div class="country-card">
+                <h3>{{ country }}</h3>
+                <ul>
+                    {% for service, number in contacts.items() %}
+                        <li><strong>{{ service }}:</strong> {{ number }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+        
+        <a href="/" class="button">{{ _('Back to Home') }}</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# Sample data for itineraries, dining, and accommodation
+itinerary_options = {
+    "1_day": {
+        "activities": ["Visit the Eiffel Tower", "Explore the Louvre Museum", "Walk around the Seine"],
+        "transportation": "Use public transportation, or rent a bike",
+        "dining": ["Le Jules Verne (Eiffel Tower)", "Le Comptoir du Relais (near the Seine)"],
+        "accommodation": ["Hotel Le Meurice", "Hotel Ritz Paris"]
+    },
+    "2_day": {
+        "activities": ["Eiffel Tower, Louvre Museum, Notre Dame", "Montmartre, Sacré-Cœur, The Pantheon"],
+        "transportation": "Taxi or Metro for quick travel",
+        "dining": ["Le Procope (historic restaurant)", "Les Deux Magots (literary cafe)"],
+        "accommodation": ["The Peninsula Paris", "Hotel de Crillon"]
+    },
+    "3_day": {
+        "activities": ["Explore the city’s historical landmarks", "Day trip to Versailles", "Art galleries and local shopping"],
+        "transportation": "Taxi or Metro for long distances, walking for local attractions",
+        "dining": ["Pierre Gagnaire (Michelin star)", "Le Cinq (luxury dining)"],
+        "accommodation": ["Shangri-La Paris", "Four Seasons Hotel George V"]
+    }
+}
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/suggest_itinerary', methods=['POST'])
+def suggest_itinerary():
+    time_avail = request.form.get('time_avail')
+    preferences = request.form.get('preferences')
+    
+    itinerary = itinerary_options.get(time_avail, None)
+    
+    if itinerary:
+        activities = itinerary['activities']
+        transportation = itinerary['transportation']
+        dining = itinerary['dining']
+        accommodation = itinerary['accommodation']
+        
+        # For simplicity, show a message with preferences too
+        preference_message = f"Your preference: {preferences}"
+        
+        return render_template('itinerary.html', activities=activities, transportation=transportation,
+                               dining=dining, accommodation=accommodation, preference_message=preference_message)
+    else:
+        return render_template('index.html', error="No itinerary found for the given time.")
+
+if __name__ == '__main__':
+    app.run(debug=True)

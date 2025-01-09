@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Full Visitor Guide</h1>
+    <form action="/suggest_itinerary" method="POST">
+        <div class="form-group">
+            <label for="time_avail">How many days are you planning to stay?</label>
+            <select name="time_avail" id="time_avail">
+                <option value="1_day">1 Day</option>
+                <option value="2_day">2 Days</option>
+                <option value="3_day">3 Days</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="preferences">What kind of experiences are you looking for? (e.g., cultural, adventure, relaxation)</label>
+            <input type="text" name="preferences" id="preferences" required>
+        </div>
+
+        <button type="submit" class="button">Get Itinerary</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

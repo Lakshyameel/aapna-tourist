@@ -1,0 +1,11 @@
+msgid "Welcome to Tourist Information"
+msgstr "Bienvenido a la Información Turística"
+
+msgid "Emergency Contact Numbers"
+msgstr "Números de contacto de emergencia"
+
+msgid "Travel Tips for Foreign Tourists"
+msgstr "Consejos de viaje para turistas extranjeros"
+
+msgid "Back to Home"
+msgstr "Volver a la página principal"

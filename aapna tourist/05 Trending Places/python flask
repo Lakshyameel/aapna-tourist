@@ -1,0 +1,19 @@
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+# Example list of trending places
+trending_places = [
+    {'name': 'Paris', 'country': 'France', 'popularity': 'High', 'image': 'paris.jpg'},
+    {'name': 'New York', 'country': 'USA', 'popularity': 'Very High', 'image': 'newyork.jpg'},
+    {'name': 'Tokyo', 'country': 'Japan', 'popularity': 'High', 'image': 'tokyo.jpg'},
+    {'name': 'Sydney', 'country': 'Australia', 'popularity': 'Moderate', 'image': 'sydney.jpg'},
+    {'name': 'Cape Town', 'country': 'South Africa', 'popularity': 'High', 'image': 'capetown.jpg'}
+]
+
+@app.route('/')
+def index():
+    return render_template('index.html', places=trending_places)
+
+if __name__ == '__main__':
+    app.run(debug=True)

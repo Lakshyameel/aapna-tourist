@@ -1,0 +1,48 @@
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# Sample data for locations with their dynamic pricing details
+location_data = {
+    "Eiffel Tower": {
+        "entry_fee": 25,  # in USD
+        "transport_cost": 15,  # in USD
+        "other_expenses": 10,  # in USD (e.g., food, souvenirs)
+        "description": "An iconic landmark in Paris, known for its breathtaking views."
+    },
+    "Louvre Museum": {
+        "entry_fee": 20,  # in USD
+        "transport_cost": 10,  # in USD
+        "other_expenses": 5,  # in USD
+        "description": "The world’s largest art museum and a historic monument in Paris."
+    },
+    "Colosseum": {
+        "entry_fee": 18,  # in EUR
+        "transport_cost": 10,  # in EUR
+        "other_expenses": 8,  # in EUR
+        "description": "An ancient amphitheater in Rome, known for gladiatorial games."
+    },
+    "Great Wall of China": {
+        "entry_fee": 30,  # in CNY
+        "transport_cost": 20,  # in CNY
+        "other_expenses": 12,  # in CNY
+        "description": "A series of fortifications made of various materials, stretching across northern China."
+    }
+}
+
+@app.route('/')
+def index():
+    return render_template('index.html', locations=location_data)
+
+@app.route('/location_details', methods=['POST'])
+def location_details():
+    location_name = request.form.get('location')
+    location = location_data.get(location_name)
+    
+    if location:
+        return render_template('location_details.html', location=location, location_name=location_name)
+    else:
+        return render_template('index.html', locations=location_data, error="Location not found.")
+
+if __name__ == '__main__':
+    app.run(debug=True)
